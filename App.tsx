@@ -9,8 +9,29 @@ import { SpiceIcon, ChevronDownIcon, SunIcon, MoonIcon } from './components/icon
 type Theme = 'light' | 'dark';
 
 const App: React.FC = () => {
-  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [products, setProducts] = useState<Product[]>(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+        const savedProducts = localStorage.getItem('products');
+        if (savedProducts) {
+            return JSON.parse(savedProducts);
+        }
+    }
+    return INITIAL_PRODUCTS;
+  });
+
+  const [transactions, setTransactions] = useState<Transaction[]>(() => {
+    if (typeof window !== 'undefined' && window.localStorage) {
+        const savedTransactions = localStorage.getItem('transactions');
+        if (savedTransactions) {
+            return JSON.parse(savedTransactions).map((tx: Transaction) => ({
+                ...tx,
+                timestamp: new Date(tx.timestamp),
+            }));
+        }
+    }
+    return [];
+  });
+  
   const [isManagerOpen, setIsManagerOpen] = useState(false);
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -26,6 +47,14 @@ const App: React.FC = () => {
     root.classList.add(theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    localStorage.setItem('products', JSON.stringify(products));
+  }, [products]);
+
+  useEffect(() => {
+    localStorage.setItem('transactions', JSON.stringify(transactions));
+  }, [transactions]);
 
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
@@ -61,10 +90,10 @@ const App: React.FC = () => {
                 <SpiceIcon />
             </div>
             <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight bg-gradient-to-r from-amber-400 via-brand-primary-light to-orange-500 text-transparent bg-clip-text">
-              Masala & Oil Calculator
+              Rate Calculator
             </h1>
           </div>
-          <p className="text-text-secondary-light dark:text-text-secondary-dark">Live price and weight calculations for your shop.</p>
+          <p className="text-text-secondary-light dark:text-text-secondary-dark">Live price and weight calculations.</p>
           
           <button onClick={toggleTheme} className="absolute top-0 right-0 p-2 rounded-full bg-base-200-light dark:bg-base-200-dark text-text-secondary-light dark:text-text-secondary-dark hover:text-brand-primary-light transition-colors duration-300" aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}>
               {theme === 'light' ? <MoonIcon /> : <SunIcon />}
