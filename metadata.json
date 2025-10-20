@@ -1,0 +1,5 @@
+{
+  "name": "Masala & Oil Price Calculator",
+  "description": "A dynamic web application to quickly calculate the price or weight of masalas and oils. It helps shopkeepers by calculating values on the fly and storing a history of recent transactions for easy reference.",
+  "requestFramePermissions": []
+}

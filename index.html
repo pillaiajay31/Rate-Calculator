@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Masala & Oil Price Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              'brand-primary': {
+                DEFAULT: '#F59E0B', // Amber 500
+                light: '#FBBF24', // Amber 400
+                dark: '#D97706', // Amber 600
+              },
+              'base-100': {
+                light: '#F9FAFB', // Gray 50
+                dark: '#111827', // Gray 900
+              },
+              'base-200': {
+                light: '#FFFFFF', // White
+                dark: '#1F2937', // Gray 800
+              },
+              'base-300': {
+                light: '#F3F4F6', // Gray 100
+                dark: '#374151', // Gray 700
+              },
+              'text-primary': {
+                light: '#1F2937', // Gray 800
+                dark: '#F9FAFB', // Gray 50
+              },
+              'text-secondary': {
+                light: '#6B7280', // Gray 500
+                dark: '#9CA3AF', // Gray 400
+              },
+            },
+          },
+        },
+      }
+    </script>
+  <script type="importmap">
+{
+  "imports": {
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
+  }
+}
+</script>
+</head>
+  <body class="bg-base-100-light dark:bg-base-100-dark">
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
